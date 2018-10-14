@@ -1,0 +1,13 @@
+extends: tslint:recommended
+rules:
+  quotemark:
+    - true
+    - single
+    - avoid-escape
+  interface-name: false
+  arrow-parens: false
+  variable-name:
+    options:
+    - allow-leading-underscore
+  object-literal-sort-keys: false
+
