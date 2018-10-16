@@ -1,5 +1,5 @@
-import axios, {AxiosResponse} from 'axios';
-import {SpeedtestResult} from './speedtest';
+import axios, { AxiosResponse } from 'axios';
+import { SpeedtestResult } from './speedtest';
 
 export default class CxCloud101Api {
     constructor(private url: string,
@@ -11,7 +11,7 @@ export default class CxCloud101Api {
         const event: SpeedtestEvent = {
             user: this.user,
             device: this.device,
-            data: JSON.stringify(result),
+            data: result,
             timestamp: Date.now(),
         };
         return axios.post<SpeedtestEvent>(this.url, event);
@@ -21,6 +21,6 @@ export default class CxCloud101Api {
 export interface SpeedtestEvent {
     user: string;
     device: number;
-    data: string;
+    data: SpeedtestResult;
     timestamp: number;
 }

@@ -5,16 +5,47 @@ export default class Speedtest {
     }
 
     public async runTest(): Promise<SpeedtestResult> {
-        return new Promise<SpeedtestResult>((resolve, reject) => {
+        return new Promise<SpeedtestResultResponse>((resolve, reject) => {
             const test = speedtest(this.options);
 
             test.on('data', data => resolve(data));
             test.on('error', error => reject(error));
-        });
+        }).then(response => ({
+            ...response,
+            server: {
+                ...response.server,
+                country: response.server.cc,
+            },
+        }));
     }
 }
 
 export interface SpeedtestResult {
+    speeds: {
+        download: number;
+        upload: number;
+    };
+
+    client: {
+        ip: string;
+        lat: number;
+        lon: number;
+        isp: string;
+        country: string;
+    };
+
+    server: {
+        host: string;
+        lat: number;
+        lon: number;
+        country: string;
+        distance: number;
+        ping: number;
+        id: string;
+    };
+}
+
+export interface SpeedtestResultResponse {
     speeds: {
         download: number;
         upload: number;
