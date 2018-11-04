@@ -32,7 +32,7 @@ export default class PubSubTrigger {
             .on('message', message => {
                 const triggerMsg: TriggerMessage = JSON.parse(message.data);
 
-                const callback = this.messageCallbacks[triggerMsg.user][triggerMsg.device];
+                const callback = (this.messageCallbacks[triggerMsg.user] || {})[triggerMsg.device];
                 if (callback) {
                     this.logger
                         .log(`Triggering callback for user '${triggerMsg.user}' and device '${triggerMsg.device}'`);
