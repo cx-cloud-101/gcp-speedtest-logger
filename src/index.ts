@@ -75,7 +75,7 @@ function run() {
             const topicMatch = args.triggerTopic.match(topicRegex);
             if (topicMatch) {
                 const [, project, topic] = topicMatch;
-                const trigger = new PubSubTrigger('computas-universitet', 'speedtest-trigger', logger);
+                const trigger = new PubSubTrigger(project, topic, logger);
                 trigger.onMessage(args.user, args.device, () => speedtestLogger.execute());
             } else {
                printErrorMessage(`--triggerTopic argument did not match ${topicRegex}: ${args.triggerTopic}`);
