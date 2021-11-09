@@ -1,4 +1,4 @@
-import * as PubSub from '@google-cloud/pubsub';
+import { PubSub } from '@google-cloud/pubsub';
 import * as RandomString from 'randomstring';
 import Logger from './logger';
 
@@ -51,7 +51,7 @@ export default class PubSubTrigger {
     private createSubscription() {
         return this.pubSubClient.topic(this.topic)
             .createSubscription(this.subscriptionName)
-            .then(results =>
+            .then(() =>
                 this.logger.log(`Subscription ${this.subscriptionName} for topic ${this.topic} created.`))
             .catch(err => {
                 this.logger.error(`Error creating subscription ${this.subscriptionName}: ${err}`);
