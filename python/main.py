@@ -1,6 +1,7 @@
 import speedtest as sp
 import datetime
 import requests
+import pycountry
 
 
 def speed_test():
@@ -21,8 +22,8 @@ def build_body(res, user, device):
         "timestamp": datetime.datetime.now().timestamp(),
         "data": {
             "speeds": {
-                "download": round(res['download'] / 1024, 2), # In kB/s
-                "upload": round(res['upload'] / 1024, 2),     # In kB/s
+                "download": round(res['download']),
+                "upload": round(res['upload']),
             },
             "client": {
                 "ip": res['client']['ip'],
@@ -35,7 +36,7 @@ def build_body(res, user, device):
                 "host": res['server']['host'],
                 "lat": res['server']['lat'],
                 "lon": res['server']['lon'],
-                "country": res['server']['country'],
+                "country": pycountry.countries.get(name=res['server']['country'], default="Unknown Country").alpha_2,
                 "distance": round(res['server']['d'], 4),
                 "ping": res['ping'],
                 "id": res['server']['id'],
