@@ -15,11 +15,12 @@ def speed_test():
     res = s.results.dict()
     return res
 
+
 def build_body(res, user, device):
     body = { 
         "user": user,
         "device": device,
-        "timestamp": datetime.datetime.now().timestamp(),
+        "timestamp": int(datetime.datetime.now().timestamp()),
         "data": {
             "speeds": {
                 "download": round(res['download']),
@@ -45,6 +46,7 @@ def build_body(res, user, device):
     }
     return body
 
+
 def post_to_api(body, api_url):
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     r = requests.post(api_url, json=body, headers=headers)
@@ -52,11 +54,12 @@ def post_to_api(body, api_url):
     # Print the status code of the response.
     print(r.status_code)
 
+
 def main():
 
     # Main user (yourself)
-    user = 'sfl' # Replace with your username
-    api_url = "https://speedtest-api-raxcsdlzxq-ew.a.run.app/speedtest" # Replace with your API URL
+    user = 'sfl'  # Replace with your username
+    api_url = "https://speedtest-api-raxcsdlzxq-ew.a.run.app/speedtest"  # Replace with your API URL
 
     # Do speed test
     raw_res = speed_test()
@@ -66,6 +69,7 @@ def main():
 
     # Post to API
     post_to_api(body, api_url)
+
 
 if __name__ == '__main__':
     main()
